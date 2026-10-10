@@ -1,0 +1,2 @@
+Hello from my first Git and GitHub exercise!
+I am learning to track and push files with Git.

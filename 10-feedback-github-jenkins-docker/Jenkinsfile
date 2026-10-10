@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE = 'YOUR_DOCKERHUB_USERNAME/feedback-app:latest'
+        DOCKER_CREDENTIALS = 'docker-hub'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build image') {
+            steps {
+                bat 'docker build -t %IMAGE% .'
+            }
+        }
+
+        stage('Push image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: "$DOCKER_CREDENTIALS", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_TOKEN')]) {
+                    bat 'echo %DOCKER_TOKEN%| docker login -u %DOCKER_USER% --password-stdin'
+                    bat 'docker push %IMAGE%'
+                    bat 'docker logout'
+                }
+            }
+        }
+
+        stage('Run container') {
+            steps {
+                bat 'docker rm -f feedback-app'
+                bat 'docker run -d --name feedback-app -p 8080:80 %IMAGE%'
+            }
+        }
+    }
+}

@@ -1,0 +1,6 @@
+* { box-sizing: border-box; }
+body { margin: 0; font: 16px Arial, sans-serif; background: #eff6ff; color: #1e293b; }
+main { max-width: 620px; margin: 44px auto; padding: 28px; background: white; border-radius: 12px; }
+textarea { width: 100%; min-height: 100px; padding: 12px; font: inherit; }
+button { margin-top: 10px; padding: 10px 18px; border: 0; border-radius: 6px; background: #0369a1; color: white; }
+li { margin: 8px 0; padding: 10px; background: #f1f5f9; border-radius: 6px; }
